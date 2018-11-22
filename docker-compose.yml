@@ -1,9 +1,9 @@
 version: '2'
 services:
-  presto:
+  simpipe:
     build: .
     shm_size: 2gb
-    container_name: simpipe
+    container_name: simpipe-test
     volumes:
      - ~/work/simdata:/software/simPipe/simdata
      - ~/work/result:/software/simPipe/result
