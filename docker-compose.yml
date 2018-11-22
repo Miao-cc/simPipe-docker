@@ -1,0 +1,20 @@
+version: '1'
+services:
+  presto:
+    build: .
+    shm_size: 2gb
+    container_name: simpipe
+    volumes:
+     - ~/work/:/work/
+     - /tmp/.X11-unix:/tmp/.X11-unix:ro
+     - "/var/run/docker.sock:/var/run/docker.sock"
+    environment:
+     - DISPLAY=$DISPLAY
+    hostname: localhost
+    expose:
+     - "22"
+    ports:
+     - "2220:22/tcp"
+    image: "simpipe:base"
+    command: "/usr/sbin/sshd -D"  
+    tty: false
