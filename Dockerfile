@@ -191,8 +191,8 @@ RUN ls -lrt
 RUN ./prepare && \
     ./configure --prefix=$PSRHOME/tempo && \
     make && \
-    make install && \
-    rm -rf .git
+    make install
+    #rm -rf .git
 
 ##TEMPO2
 #
@@ -233,7 +233,7 @@ ENV PATH $PATH:$PRESTO/bin
 ENV LD_LIBRARY_PATH $PRESTO/lib
 ENV PYTHONPATH $PYTHONPATH:$PRESTO/lib/python
 WORKDIR $PRESTO/src
-RUN rm -rf ../.git
+#RUN rm -rf ../.git
 RUN make prep && \
     make
 WORKDIR $PRESTO/python/ppgplot_src

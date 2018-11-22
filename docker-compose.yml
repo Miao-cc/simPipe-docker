@@ -4,12 +4,15 @@ services:
     build: .
     shm_size: 2gb
     container_name: simpipe-test
+    configs:
+     - uid: '1029'
+       gid: '100'
     volumes:
-     - ~/work/simdata:/software/simPipe/simdata
-     - ~/work/result:/software/simPipe/result
-     - ~/work/fastdata:/software/simPipe/fastdata
-     - ~/work/simBinarydata:/software/simPipe/simBinarydata
-     - ~/work/config:/software/simPipe/config
+     - ~/work/test-simPipe/Parallel-test/simPipe1Parallel1/simdata:/home/psr/software/simPipe/simdata
+     - ~/work/test-simPipe/Parallel-test/simPipe1Parallel1/result:/home/psr/software/simPipe/result
+     - ~/work/fastdata:/home/psr/software/simPipe/fastdata
+     - ~/work/test-simPipe/Parallel-test/simPipe1Parallel1/simBinarydata:/home/psr/software/simPipe/simBinarydata
+     - ~/work/test-simPipe/Parallel-test/simPipe1Parallel1/config:/home/psr/software/simPipe/config
      - /tmp/.X11-unix:/tmp/.X11-unix:ro
      - "/var/run/docker.sock:/var/run/docker.sock"
     environment:
