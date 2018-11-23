@@ -4,9 +4,6 @@ services:
     build: .
     shm_size: 2gb
     container_name: simpipe-test
-    configs:
-     - uid: '1029'
-       gid: '100'
     volumes:
      - ~/work/test-simPipe/Parallel-test/simPipe1Parallel1/simdata:/home/psr/software/simPipe/simdata
      - ~/work/test-simPipe/Parallel-test/simPipe1Parallel1/result:/home/psr/software/simPipe/result
@@ -23,5 +20,6 @@ services:
     ports:
      - "2220:22/tcp"
     image: "simpipe:base"
+    #command: "python /home/psr/software/simPipe/simPipe.py /home/psr/software/simPipe/config/config.yaml"  
     command: "/usr/sbin/sshd -D"  
     tty: false

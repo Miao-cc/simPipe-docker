@@ -15,13 +15,14 @@ MAINTAINER Weiwei Zhu "zhuww@nao.cas.cn"
 # Suppress debconf warnings
 ENV DEBIAN_FRONTEND noninteractive
 
+
 # Switch account to root and adding user accounts and password
 USER root
 RUN echo "root:root" | chpasswd && \
     mkdir -p /root/.ssh 
 
-# Create psr user which will be used to run commands with reduced privileges.
-RUN adduser --disabled-password --gecos 'unprivileged user' psr && \
+# Create psr user which will be used to run commands with reduced privileges.  --uid 1029 --gid 100 
+RUN adduser --disabled-password --gecos 'unprivileged user' --uid 1029 psr && \
     echo "psr:psr" | chpasswd && \
     mkdir -p /home/psr/.ssh && \
     chown -R psr:psr /home/psr/.ssh
@@ -120,7 +121,7 @@ ENV PIP_FIND_LINKS https://pypi.tuna.tsinghua.edu.cn/simple
 RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pip -U 
 RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple setuptools -U
 RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -Iv scipy==0.19.0
-RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple numpy==1.13.3 matplotlib==2.1.0 pyfits==3.5 pywavelets==0.5.2 astropy==2.0.5
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple numpy==1.13.3 matplotlib==2.1.0 pyfits==3.5 pywavelets==0.5.2 astropy==2.0.5 pyyaml
 RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -Iv scikit-learn==0.12.1
 RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -Iv theano==0.8
 RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -Iv pyephem==3.7.6.0 fitsio==0.9.2
@@ -155,8 +156,7 @@ RUN wget http://www.atnf.csiro.au/people/pulsar/psrcat/downloads/psrcat_pkg.tar.
     git clone git://git.code.sf.net/p/psrchive/code psrchive && \
     git clone https://github.com/zhuww/ubc_AI.git $PSRHOME/lib/python2.7/site-packages/ubc_AI && \
     git clone https://github.com/Miao-cc/simPipe.git && \
-    git clone https://github.com/NAOC-pulsar/OPTIMUS.git && \
-    git clone https://bitbucket.org/psrsoft/tempo2.git tempo2Install
+    git clone https://github.com/NAOC-pulsar/OPTIMUS.git
 
 
 #OPTIMUS
@@ -194,23 +194,6 @@ RUN ./prepare && \
     make install
     #rm -rf .git
 
-##TEMPO2
-#
-ENV TEMPO2 $PSRHOME/tempo2
-ENV PATH $PATH:$TEMPO2
-ENV PGPLOT_DIR /usr/lib/pgplot5
-ENV PGPLOT_FONT /usr/lib/pgplot5/grfont.dat
-ENV PSRCAT_FILE $PSRHOME/psrcat_tar/psrcat.db
-ENV PYTHONPATH $PYTHONPATH:$PSRCHIVE/lib/python2.7/site-packages
-WORKDIR $PSRHOME/tempo2Install
-RUN cp $CALCEPH/include/* .
-RUN ./bootstrap && \
-    cp -r T2runtime $TEMPO2 && \
-    ./configure --prefix=$TEMPO2 && \
-    make && \
-    make install && \
-    make plugins && \
-    make plugins-install 
 
 #PSRCHiVE
 ENV PSRCHIVE $PSRHOME/psrchive
@@ -219,7 +202,6 @@ ENV PGPLOT_DIR /usr/lib/pgplot5
 ENV PGPLOT_FONT /usr/lib/pgplot5/grfont.dat
 ENV PSRCAT_FILE $PSRHOME/psrcat_tar/psrcat.db
 ENV PYTHONPATH $PYTHONPATH:$PSRCHIVE/lib/python2.7/site-packages
-ENV TEMPO2 $PSRHOME/tempo2
 WORKDIR $PSRCHIVE
 RUN ./bootstrap && \
     ./configure && \
