@@ -160,8 +160,8 @@ RUN wget http://www.atnf.csiro.au/people/pulsar/psrcat/downloads/psrcat_pkg.tar.
 
 
 #OPTIMUS
-ENV OPTIMUS $PSRHOME/OPTIMUS
 ENV PYTHONPATH $PYTHONPATH:$PSRHOME/lib/python2.7/site-packages:$PSRHOME/simPipe:$PSRHOME/OPTIMUS/python
+ENV PATH $PATH:$PSRHOME/OPTIMUS
 WORKDIR $PSRHOME/OPTIMUS
 RUN make
 
