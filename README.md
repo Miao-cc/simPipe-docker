@@ -33,4 +33,5 @@ Using the container with SSH
 As noted above, the image comes with an OpenSSH server and X11 forwarding enabled. To use this from your machine effectively, it is recommended that you append the contents of the **ssh.cfg** file into your **~/.ssh/config** file. This will allways enable X11 forwarding and will ensure that your authorized hosts list does not become invalidated on restart of a container.
 
 
-
+If you want to run simPipe.py, you need edit the simPipe.py.
+Please change the '~/psrsoft/OPTIMUS/python' to '~/software/OPTIMUS/python'.
